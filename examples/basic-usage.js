@@ -487,7 +487,10 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team A',
         'Bob 1',
         'Designer',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+        },
         '40',
         'N',
         'A',
@@ -497,7 +500,10 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Charlie 1',
         'Admin',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+        },
         '30',
         'P',
         'B',
@@ -507,7 +513,10 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'David 1',
         'Developer',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+        },
         '100',
         'P',
         'A',
@@ -517,7 +526,10 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team B',
         'User 1',
         'Tester',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+        },
         '60',
         'N',
         'A',
@@ -527,7 +539,11 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Alice 1',
         'Manager',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+
+        },
         '85',
         'P',
         'B',
@@ -537,7 +553,11 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team A',
         'Bob',
         'Designer',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+
+        },
         '40',
         'N',
         'A',
@@ -547,7 +567,11 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Charlie',
         'Admin',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+
+        },
         '30',
         'P',
         'B',
@@ -557,7 +581,11 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'David',
         'Developer',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+
+        },
         '100',
         'P',
         'A',
@@ -567,7 +595,11 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team B',
         'User',
         'Tester',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+
+        },
         '60',
         'N',
         'A',
@@ -577,7 +609,11 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Alice',
         'Manager',
-        'The final implementation should allow users to build highly visual dashboards and reports.',
+        {
+          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
+          fontSize: 10,
+
+        },
         '85',
         'P',
         'B',

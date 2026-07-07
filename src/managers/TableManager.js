@@ -120,6 +120,10 @@ class TableManager {
       for (let i = 0; i < rowsData.length; i++) {
         const newRow = this.#xmlParser.deepClone(dataTemplate)
         this.#updateRowId(newRow)
+        const templateHeight = parseInt(dataTemplate['@_h'] || 0, 10)
+        if (templateHeight > 1000000) {
+          newRow['@_h'] = '381000'
+        }
 
         const tcs = newRow['a:tc'] || []
         const rowObj = rowsData[i]
@@ -177,6 +181,10 @@ class TableManager {
         const template = i === 0 ? headerTemplate : trs[i] || dataTemplate
         const newRow = this.#xmlParser.deepClone(template)
         this.#updateRowId(newRow)
+        const templateHeight = parseInt(template['@_h'] || 0, 10)
+        if (templateHeight > 1000000) {
+          newRow['@_h'] = '381000'
+        }
 
         const tcs = newRow['a:tc'] || []
         const rowData = rowsData[i]
@@ -325,6 +333,10 @@ class TableManager {
     for (let r = 0; r < targetHeight; r++) {
       const newRow = this.#xmlParser.deepClone(lastRow)
       this.#updateRowId(newRow)
+      const lastRowHeight = parseInt(lastRow['@_h'] || 0, 10)
+      if (lastRowHeight > 1000000) {
+        newRow['@_h'] = '381000'
+      }
 
       const tcs = newRow['a:tc'] || []
       for (let c = 0; c < numCols; c++) {
@@ -1666,6 +1678,31 @@ class TableManager {
         }
       }
     }
+
+    if (cellOptions.fontFace || cellOptions.fontName || cellOptions.fontFamily) {
+      const fontName = cellOptions.fontFace || cellOptions.fontName || cellOptions.fontFamily
+      const txBody = cellObj['a:txBody']
+      if (txBody && txBody['a:p']) {
+        const paras = Array.isArray(txBody['a:p']) ? txBody['a:p'] : [txBody['a:p']]
+        for (const p of paras) {
+          if (p['a:r']) {
+            const runs = Array.isArray(p['a:r']) ? p['a:r'] : [p['a:r']]
+            for (const r of runs) {
+              if (!r['a:rPr']) r['a:rPr'] = {}
+              r['a:rPr']['a:latin'] = { '@_typeface': fontName }
+              r['a:rPr']['a:ea'] = { '@_typeface': fontName }
+              r['a:rPr']['a:cs'] = { '@_typeface': fontName }
+            }
+          }
+          if (p['a:endParaRPr']) {
+            const endParaRPr = p['a:endParaRPr']
+            endParaRPr['a:latin'] = { '@_typeface': fontName }
+            endParaRPr['a:ea'] = { '@_typeface': fontName }
+            endParaRPr['a:cs'] = { '@_typeface': fontName }
+          }
+        }
+      }
+    }
   }
 
   #expandCellShape(config, cellBounds) {
@@ -2838,7 +2875,7 @@ class TableManager {
 
         const totalCellHeight_emu = marT + marB + textHeight_emu
         const rowTemplateHeight = parseInt(row['@_h'] || 0, 10)
-        const minFloor = rowTemplateHeight > 0 ? rowTemplateHeight : 228600
+        const minFloor = (rowTemplateHeight > 0 && rowTemplateHeight <= 1000000) ? rowTemplateHeight : 228600
         cellHeights[r][c] = Math.max(totalCellHeight_emu, minFloor)
       }
     }
@@ -2885,8 +2922,19 @@ class TableManager {
     }
 
     if (writeToXml) {
+      let totalHeight = 0
       for (let r = 0; r < numRows; r++) {
         trsArr[r]['@_h'] = String(rowHeights[r])
+        totalHeight += rowHeights[r]
+      }
+      try {
+        const ctx = this.#getTableContext(slideIndex, tableId, slideManager)
+        const frameObj = ctx.frameObj
+        if (frameObj && frameObj['p:xfrm'] && frameObj['p:xfrm']['a:ext']) {
+          frameObj['p:xfrm']['a:ext']['@_cy'] = String(totalHeight)
+        }
+      } catch (e) {
+        // ignore
       }
     }
     return rowHeights
