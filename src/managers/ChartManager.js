@@ -864,7 +864,7 @@ class ChartManager {
     return ValidationEngine.validateSeriesNameLabels(xml, xfrm, options)
   }
 
-  #findChartCoordinates(slideXml, chartId, relationshipManager, slideZipPath) {
+  #findChartCoordinates(slideXml, chartId, relationshipManager, slideZipPath, layoutXml = null) {
     const gfPattern = /<p:graphicFrame>([\s\S]*?)<\/p:graphicFrame>/g
     let match
     while ((match = gfPattern.exec(slideXml)) !== null) {
@@ -892,16 +892,56 @@ class ChartManager {
       }
 
       if (isMatch) {
+        // Try to find xfrm directly in the graphicFrame
         const xfrmMatch = /<p:xfrm[^>]*>([\s\S]*?)<\/p:xfrm>/.exec(gfContent)
         if (xfrmMatch) {
-          const offMatch = /<a:off\s+x="(\d+)"\s+y="(\d+)"\/>/.exec(xfrmMatch[1])
-          const extMatch = /<a:ext\s+cx="(\d+)"\s+cy="(\d+)"\/>/.exec(xfrmMatch[1])
-          if (offMatch && extMatch) {
+          const xfrmInner = xfrmMatch[1]
+          // Order-independent attribute extraction for a:off and a:ext
+          const offXMatch = /<a:off[^>]*\bx="(\d+)"/.exec(xfrmInner)
+          const offYMatch = /<a:off[^>]*\by="(\d+)"/.exec(xfrmInner)
+          const extCxMatch = /<a:ext[^>]*\bcx="(\d+)"/.exec(xfrmInner)
+          const extCyMatch = /<a:ext[^>]*\bcy="(\d+)"/.exec(xfrmInner)
+          if (offXMatch && offYMatch && extCxMatch && extCyMatch) {
             return {
-              left: parseInt(offMatch[1], 10),
-              top: parseInt(offMatch[2], 10),
-              width: parseInt(extMatch[1], 10),
-              height: parseInt(extMatch[2], 10),
+              left: parseInt(offXMatch[1], 10),
+              top: parseInt(offYMatch[1], 10),
+              width: parseInt(extCxMatch[1], 10),
+              height: parseInt(extCyMatch[1], 10),
+            }
+          }
+        }
+
+        // No xfrm in slide — chart inherits position from a slide layout placeholder
+        // Extract placeholder idx to match against layout
+        if (layoutXml) {
+          const phIdxMatch = /<p:ph[^>]*\bidx="(\d+)"/.exec(gfContent)
+          const phIdx = phIdxMatch ? phIdxMatch[1] : null
+
+          const spPattern = /<p:sp>([\s\S]*?)<\/p:sp>/g
+          let spMatch
+          while ((spMatch = spPattern.exec(layoutXml)) !== null) {
+            const spContent = spMatch[0]
+            const hasMatchingPh = phIdx
+              ? new RegExp(`<p:ph[^>]*\\bidx="${phIdx}"`).test(spContent)
+              : /<p:ph[^>]*\btype="body"/.test(spContent)
+
+            if (hasMatchingPh) {
+              const lxfrmMatch = /<a:xfrm[^>]*>([\s\S]*?)<\/a:xfrm>/.exec(spContent)
+              if (lxfrmMatch) {
+                const lxfrmInner = lxfrmMatch[1]
+                const offXM = /<a:off[^>]*\bx="(\d+)"/.exec(lxfrmInner)
+                const offYM = /<a:off[^>]*\by="(\d+)"/.exec(lxfrmInner)
+                const extCxM = /<a:ext[^>]*\bcx="(\d+)"/.exec(lxfrmInner)
+                const extCyM = /<a:ext[^>]*\bcy="(\d+)"/.exec(lxfrmInner)
+                if (offXM && offYM && extCxM && extCyM) {
+                  return {
+                    left: parseInt(offXM[1], 10),
+                    top: parseInt(offYM[1], 10),
+                    width: parseInt(extCxM[1], 10),
+                    height: parseInt(extCyM[1], 10),
+                  }
+                }
+              }
             }
           }
         }
@@ -1702,11 +1742,26 @@ class ChartManager {
 
     const slideInfo = slideManager.getSlideInfo(slideIndex)
     const slideXml = await this.#zipManager.readFile(slideInfo.zipPath)
+
+    // Pre-fetch the slide layout XML so we can resolve placeholder-inherited chart positions
+    let layoutXml = null
+    try {
+      const rels = relationshipManager.getRelationships(slideInfo.zipPath) || []
+      const layoutRel = rels.find(r => r.type && r.type.includes('slideLayout'))
+      if (layoutRel) {
+        const layoutPath = relationshipManager.resolveTarget(slideInfo.zipPath, layoutRel.target)
+        layoutXml = await this.#zipManager.readFile(layoutPath)
+      }
+    } catch (_e) {
+      // ignore — we'll fall back to returning null if still not found
+    }
+
     const chartXfrm = this.#findChartCoordinates(
       slideXml,
       chartId,
       relationshipManager,
-      slideInfo.zipPath
+      slideInfo.zipPath,
+      layoutXml
     )
     if (!chartXfrm) {
       throw new Error(`Coordinates not found for chart "${chartId}" on slide ${slideIndex}`)

@@ -542,6 +542,49 @@ class TableManager {
   }
 
   /**
+   * Explicitly set column widths for a table.
+   * Widths can be provided in EMUs (English Metric Units) or pixels.
+   * Values < 10000 are treated as pixels and automatically converted to EMUs (× 9525).
+   * Values >= 10000 are treated as EMUs directly.
+   *
+   * @param {number} slideIndex
+   * @param {string} tableId
+   * @param {number[]} widths - Array of widths, one per column. Pixels if < 10000, EMUs if >= 10000.
+   * @param {SlideManager} slideManager
+   * @param {ShapeManager} [shapeManager]
+   */
+  setTableColumnWidths(slideIndex, tableId, widths, slideManager, shapeManager = null) {
+    const { tblObj, frameObj } = this.#getTableContext(slideIndex, tableId, slideManager)
+
+    const tblGrid = tblObj['a:tblGrid']
+    if (!tblGrid) return
+
+    const gridCols = tblGrid['a:gridCol'] || []
+    const gridColsArr = Array.isArray(gridCols) ? gridCols : [gridCols]
+
+    const emuWidths = widths.map(w => (w < 10000 ? Math.round(w * 9525) : Math.round(w)))
+
+    emuWidths.forEach((w, idx) => {
+      if (gridColsArr[idx]) {
+        gridColsArr[idx]['@_w'] = String(w)
+      }
+    })
+
+    // Update the table frame cx to match the sum of column widths
+    const totalWidth = emuWidths.reduce((sum, w) => sum + w, 0)
+    if (frameObj?.['p:xfrm']?.['a:ext']) {
+      frameObj['p:xfrm']['a:ext']['@_cx'] = String(totalWidth)
+    }
+
+    slideManager.markSlideObjDirty(slideIndex)
+
+    // Reposition all cell shapes based on the new column layout
+    if (shapeManager) {
+      this.#repositionAllTableCellShapes(slideIndex, tableId, slideManager, shapeManager)
+    }
+  }
+
+  /**
    * Inserts a table row at a specific index.
    *
    * @param {number} slideIndex

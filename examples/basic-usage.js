@@ -473,10 +473,22 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
       ]
     ))
     for (const row of tableData) {
-      await ppt.addTableRow('Table 1', row)
+      await ppt.addTableRow('Board Data', row)
 
     }
-    await ppt.removeTableRow('Table 1', 2)
+    await ppt.removeTableRow('Board Data', 2)
+
+    // Explicitly set column widths to ensure proper alignment of dot-status columns.
+    // Col 0 (NAME) gets wider; cols 1-2 (PIF/OTHER PIF) medium; cols 3-6 (dot status) narrow.
+    ppt.setTableColumnWidths('Board Data', [
+      1300000, // NAME - wider for long names
+      650000,  // PIF EMPLOYEE
+      700000,  // OTHER PIF REP.
+      400000,  // BOARD
+      400000,  // EXCOM
+      350000,  // AUDIT
+      300000,  // NRC
+    ])
 
 
     ppt.useSlide(5)
