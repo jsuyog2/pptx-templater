@@ -1,30 +1,26 @@
-<?xml version="1.0" encoding="us-ascii"?>
-<WrappedLabelInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.boldonjames.com/2016/02/Classifier/internal/wrappedLabelInfo">
+<?xml version="1.0" encoding="us-ascii"?><WrappedLabelInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.boldonjames.com/2016/02/Classifier/internal/wrappedLabelInfo">
     <Value>
         PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiPz48TGFiZWxJbmZvWG1sUGFydCB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4bWxucz0iaHR0cDovL3d3dy5ib2xkb25qYW1lcy5jb20vMjAxNi8wMi9DbGFzc2lmaWVyL2ludGVybmFsL2xhYmVsSW5mbyI+PGVsaD5zS0dRS1drK1lkdW5pR1dnWEZKaXhOaHZncEpxN1VHWTwvZWxoPjxjb25maWc+UElGX1BST0Q8L2NvbmZpZz48cG9sPlBJRl9QUk9EPC9wb2w+PHN1bW1hcnk+UHVibGljPC9zdW1tYXJ5PjxhcHA+UG93ZXJQb2ludDwvYXBwPjxTaWduYXR1cmVWYWxpZD5mYWxzZTwvU2lnbmF0dXJlVmFsaWQ+PC9MYWJlbEluZm9YbWxQYXJ0Pg==</Value>
     <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
         <SignedInfo>
-            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
             <Reference URI="">
                 <Transforms>
-                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                 </Transforms>
-                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
                 <DigestValue>gWe9USdyMUbYIcgeQlJ5nHknXTM3gl2T/iDgjjIb7Iw=</DigestValue>
             </Reference>
             <Reference URI="#INFO">
-                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
                 <DigestValue>gCfmLG6iiX9DZFqkfLWEYEzumQoSuK2mBrtoDGKUvF4=</DigestValue>
             </Reference>
         </SignedInfo>
         <SignatureValue>
             DF0hX3kwnkWSM7Vx+aHbnKHbKqjPO7WGFWT94IzDjcBAJYel0XuupZ4CVHfqOqpmZ6AzCW9+nstj4u0icXuShg==</SignatureValue>
         <Object Id="INFO">
-            <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="">
+            <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="">
                 <string>sKGQKWk+YduniGWgXFJixNhvgpJq7UGY</string>
             </ArrayOfString>
         </Object>
