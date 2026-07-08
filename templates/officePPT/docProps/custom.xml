@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="2" name="docIndexRef"><vt:lpwstr>5eeeb970-93dd-443a-af80-cdc3d3b6532b</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="3" name="bjClsUserRVM"><vt:lpwstr>[]</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="4" name="bjSaver"><vt:lpwstr>Gfk1VOGM45q9nAUTLfrFMdHururwAn3y</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="5" name="bjDocumentSecurityLabel"><vt:lpwstr>Public</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="6" name="bjSlideMasterFooterText"><vt:lpwstr>Public</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="7" name="bjpmDocIH"><vt:lpwstr>59YhT6upp0Lv+BBWcGMC8RsvmZjl3log</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="8" name="bjDocumentLabelXML"><vt:lpwstr>&lt;?xml version="1.0" encoding="us-ascii"?&gt;&lt;sisl
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
+    xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="2" name="docIndexRef">
+        <vt:lpwstr>5eeeb970-93dd-443a-af80-cdc3d3b6532b</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="3" name="bjClsUserRVM">
+        <vt:lpwstr>[]</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="4" name="bjSaver">
+        <vt:lpwstr>Gfk1VOGM45q9nAUTLfrFMdHururwAn3y</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="5" name="bjDocumentLabelXML">
+        <vt:lpwstr>&lt;?xml version="1.0" encoding="us-ascii"?&gt;&lt;sisl
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" sislVersion="0"
             policy="4f3ffa34-8ea5-4d04-9688-c0eeb614b05f" origin="userSelected"
-            xmlns="http://www.boldonj</vt:lpwstr></property><property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="9" name="bjDocumentLabelXML-0"><vt:lpwstr>ames.com/2008/01/sie/internal/label"&gt;&lt;element
-            uid="id_classification_nonbusiness" value="" /&gt;&lt;/sisl&gt;</vt:lpwstr></property></Properties>
+            xmlns="http://www.boldonj</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="6" name="bjDocumentLabelXML-0">
+        <vt:lpwstr>ames.com/2008/01/sie/internal/label"&gt;&lt;element
+            uid="id_classification_nonbusiness" value="" /&gt;&lt;/sisl&gt;</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="7" name="bjDocumentSecurityLabel">
+        <vt:lpwstr>Public</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="8" name="bjSlideMasterFooterText">
+        <vt:lpwstr>Public</vt:lpwstr>
+    </property>
+    <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="9" name="bjpmDocIH">
+        <vt:lpwstr>59YhT6upp0Lv+BBWcGMC8RsvmZjl3log</vt:lpwstr>
+    </property>
+</Properties>

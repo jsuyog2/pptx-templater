@@ -1649,39 +1649,6 @@ class PPTXTemplater {
   }
 
   /**
-   * Explicitly sets the column widths for a table, overriding any auto-fit calculation.
-   * Widths can be provided in EMUs (English Metric Units) or pixels.
-   * Values <= 914 are treated as pixels and automatically converted to EMUs (× 9525).
-   * Values > 914 are treated as EMUs directly.
-   *
-   * @param {string} tableId - Table name or shape ID.
-   * @param {number[]} widths - Array of column widths. One value per column.
-   * @returns {PPTXTemplater} this (chainable)
-   *
-   * @example
-   * // Set 3-column table: 300px name, 100px status, 100px value
-   * ppt.setTableColumnWidths('MyTable', [300, 100, 100]);
-   *
-   * // Using EMUs directly
-   * ppt.setTableColumnWidths('MyTable', [2857500, 952500, 952500]);
-   */
-  setTableColumnWidths(tableId, widths) {
-    this.#assertLoaded()
-    const targetIndices = this.#getTargetSlideIndices()
-    for (const idx of targetIndices) {
-      this.#tableManager.setTableColumnWidths(
-        idx,
-        tableId,
-        widths,
-        this.#slideManager,
-        this.#shapeManager
-      )
-    }
-    return this
-  }
-
-
-  /**
    * Inserts a new row at the specified 0-based index, shifting existing rows down.
    *
    * @param {string} tableId - Table name or shape ID.

@@ -192,304 +192,6 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
     ppt.updateText('List', {
       list: ['Fast PPTX generation', 'OpenXML based', 'Chart updates', 'Table updates'],
     })
-    const dataUser = [
-      {
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3016",
-        "FULL_NAME": "Hassan Jaber",
-        "CURRENT_POSITION": "NRC Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "NRC",
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3017",
-        "FULL_NAME": "Tarek ElSayed",
-        "CURRENT_POSITION": "Board Member",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "NO",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3018",
-        "FULL_NAME": "Lina Mokhtar",
-        "CURRENT_POSITION": "Finance Director",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "EXCOM"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3019",
-        "FULL_NAME": "Youssef Al-Mansoor",
-        "CURRENT_POSITION": "Independent Board Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "NO",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3020",
-        "FULL_NAME": "Amal Al-Dosari",
-        "CURRENT_POSITION": "Audit Committee Chair",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Audit"
-      },
-      {
-        "COMPANY_ACRONYM": "ELM",
-        "Pool": "DIGITAL & TECHNOLOGY HOLDINGS",
-        "MENA_ID_Sector": "DIGITAL AND TECHNOLOGY",
-        "Company_Name": "ELM COMPANY",
-        "SANAM_UNIQUE_ID": "SANAM-3021",
-        "FULL_NAME": "Fahad Al-Qahtani",
-        "CURRENT_POSITION": "Managing Director",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "Executive"
-      },
-      {
-        "COMPANY_ACRONYM": "ELM",
-        "Pool": "DIGITAL & TECHNOLOGY HOLDINGS",
-        "MENA_ID_Sector": "DIGITAL AND TECHNOLOGY",
-        "Company_Name": "ELM COMPANY",
-        "SANAM_UNIQUE_ID": "SANAM-3022",
-        "FULL_NAME": "Noura Al-Sudairy",
-        "CURRENT_POSITION": "Remuneration Committee Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "NRC"
-      },
-      {
-        "COMPANY_ACRONYM": "ZAIN",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "ZAIN SAUDI ARABIA",
-        "SANAM_UNIQUE_ID": "SANAM-3023",
-        "FULL_NAME": "Khaled Al-Marzouki",
-        "CURRENT_POSITION": "Board Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "NO",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "ZAIN",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "ZAIN SAUDI ARABIA",
-        "SANAM_UNIQUE_ID": "SANAM-3024",
-        "FULL_NAME": "Reem Al-Ghamdi",
-        "CURRENT_POSITION": "Strategy Committee Head",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "EXCOM"
-      },
-      {
-        "COMPANY_ACRONYM": "MAADEN",
-        "Pool": "INDUSTRIES & MINING",
-        "MENA_ID_Sector": "MINING AND METALS",
-        "Company_Name": "SAUDI ARABIAN MINING COMPANY (MA'ADEN)",
-        "SANAM_UNIQUE_ID": "SANAM-3025",
-        "FULL_NAME": "Sultan Al-Otaibi",
-        "CURRENT_POSITION": "Vice Chairman",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "MAADEN",
-        "Pool": "INDUSTRIES & MINING",
-        "MENA_ID_Sector": "MINING AND METALS",
-        "Company_Name": "SAUDI ARABIAN MINING COMPANY (MA'ADEN)",
-        "SANAM_UNIQUE_ID": "SANAM-3026",
-        "FULL_NAME": "Sarah Al-Kharji",
-        "CURRENT_POSITION": "NRC Chair",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "NRC"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3027",
-        "FULL_NAME": "Mohammed Al-Shehri",
-        "CURRENT_POSITION": "Board Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "NO",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3028",
-        "FULL_NAME": "Fatimah Al-Zahrani",
-        "CURRENT_POSITION": "Risk Committee Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Risk"
-      },
-      {
-        "COMPANY_ACRONYM": "SNB",
-        "Pool": "FINANCIAL INSTITUTIONS",
-        "MENA_ID_Sector": "FINANCIAL SERVICES",
-        "Company_Name": "SAUDI NATIONAL BANK",
-        "SANAM_UNIQUE_ID": "SANAM-3029",
-        "FULL_NAME": "Abdulaziz Al-Saud",
-        "CURRENT_POSITION": "Board Member",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "SNB",
-        "Pool": "FINANCIAL INSTITUTIONS",
-        "MENA_ID_Sector": "FINANCIAL SERVICES",
-        "Company_Name": "SAUDI NATIONAL BANK",
-        "SANAM_UNIQUE_ID": "SANAM-3030",
-        "FULL_NAME": "Layla Al-Subaie",
-        "CURRENT_POSITION": "Audit Committee Member",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "NO",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Audit"
-      },
-      {
-        "COMPANY_ACRONYM": "TADAWUL",
-        "Pool": "FINANCIAL INSTITUTIONS",
-        "MENA_ID_Sector": "FINANCIAL SERVICES",
-        "Company_Name": "SAUDI TADAWUL GROUP",
-        "SANAM_UNIQUE_ID": "SANAM-3031",
-        "FULL_NAME": "Ibrahim Al-Mubarak",
-        "CURRENT_POSITION": "Chairman",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "TADAWUL",
-        "Pool": "FINANCIAL INSTITUTIONS",
-        "MENA_ID_Sector": "FINANCIAL SERVICES",
-        "Company_Name": "SAUDI TADAWUL GROUP",
-        "SANAM_UNIQUE_ID": "SANAM-3032",
-        "FULL_NAME": "Mona Al-Sharif",
-        "CURRENT_POSITION": "NRC Member",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "NRC"
-      },
-      {
-        "COMPANY_ACRONYM": "STC",
-        "Pool": "SAUDI EQUITY HOLDINGS",
-        "MENA_ID_Sector": "TELECOM, MEDIA AND TECHNOLOGY",
-        "Company_Name": "SAUDI TELECOM COMPANY (STC)",
-        "SANAM_UNIQUE_ID": "SANAM-3033",
-        "FULL_NAME": "Waleed Al-Harbi",
-        "CURRENT_POSITION": "Executive Advisor",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "NO",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "EXCOM"
-      },
-      {
-        "COMPANY_ACRONYM": "ACWA",
-        "Pool": "UTILITIES & RENEWABLES",
-        "MENA_ID_Sector": "UTILITIES",
-        "Company_Name": "ACWA POWER COMPANY",
-        "SANAM_UNIQUE_ID": "SANAM-3034",
-        "FULL_NAME": "Bandar Al-Amri",
-        "CURRENT_POSITION": "Board Member",
-        "IS_PIF_EMPLOYEE": true,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": true,
-        "BOARD_TYPE": "Board"
-      },
-      {
-        "COMPANY_ACRONYM": "ACWA",
-        "Pool": "UTILITIES & RENEWABLES",
-        "MENA_ID_Sector": "UTILITIES",
-        "Company_Name": "ACWA POWER COMPANY",
-        "SANAM_UNIQUE_ID": "SANAM-3035",
-        "FULL_NAME": "Deema Al-Jasser",
-        "CURRENT_POSITION": "Sustainability Committee Head",
-        "IS_PIF_EMPLOYEE": false,
-        "PIF_REPRESENTATIVE": "YES",
-        "IS_CURRENT_FLAG": null,
-        "BOARD_TYPE": "Special"
-      }
-    ]
-    const color = (d) => ({
-      type: 'circle',
-      fill: d,
-      width: 7,
-      height: 7,
-    })
-    const tableData = dataUser.map((item) => (
-      [
-        item.FULL_NAME,
-        item.IS_PIF_EMPLOYEE ? 'YES' : 'NO',
-        !item.IS_PIF_EMPLOYEE ? 'YES' : 'NO',
-        item.BOARD_TYPE === 'Board' ? color('#005C4D') : color('#C3984D'),
-        item.BOARD_TYPE === 'EXCOM' ? color('#005C4D') : color('#C3984D'),
-        item.BOARD_TYPE === 'Audit' ? color('#005C4D') : color('#C3984D'),
-        item.BOARD_TYPE === 'NRC' ? color('#005C4D') : color('#C3984D')
-
-      ]
-    ))
-    for (const row of tableData) {
-      await ppt.addTableRow('Board Data', row)
-
-    }
-    await ppt.removeTableRow('Board Data', 2)
-
-    // Explicitly set column widths to ensure proper alignment of dot-status columns.
-    // Col 0 (NAME) gets wider; cols 1-2 (PIF/OTHER PIF) medium; cols 3-6 (dot status) narrow.
-    ppt.setTableColumnWidths('Board Data', [
-      1300000, // NAME - wider for long names
-      650000,  // PIF EMPLOYEE
-      700000,  // OTHER PIF REP.
-      400000,  // BOARD
-      400000,  // EXCOM
-      350000,  // AUDIT
-      300000,  // NRC
-    ])
-
 
     ppt.useSlide(5)
 
@@ -499,10 +201,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team A',
         'Bob 1',
         'Designer',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '40',
         'N',
         'A',
@@ -512,10 +211,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Charlie 1',
         'Admin',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '30',
         'P',
         'B',
@@ -525,10 +221,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'David 1',
         'Developer',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '100',
         'P',
         'A',
@@ -538,10 +231,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team B',
         'User 1',
         'Tester',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '60',
         'N',
         'A',
@@ -551,11 +241,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Alice 1',
         'Manager',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '85',
         'P',
         'B',
@@ -565,11 +251,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team A',
         'Bob',
         'Designer',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '40',
         'N',
         'A',
@@ -579,11 +261,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Charlie',
         'Admin',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '30',
         'P',
         'B',
@@ -593,11 +271,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'David',
         'Developer',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '100',
         'P',
         'A',
@@ -607,11 +281,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         'Team B',
         'User',
         'Tester',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '60',
         'N',
         'A',
@@ -621,11 +291,7 @@ async function main(TEMPLATE_PATH_PPTX, OUTPUT_PATH) {
         '',
         'Alice',
         'Manager',
-        {
-          value: 'The final implementation should allow users to build highly visual dashboards and reports.',
-          fontSize: 10,
-
-        },
+        'The final implementation should allow users to build highly visual dashboards and reports.',
         '85',
         'P',
         'B',

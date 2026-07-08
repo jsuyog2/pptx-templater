@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ds:datastoreItem ds:itemID="{4BBA4F4B-83B1-4A04-928D-4E5BAAE29B16}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://www.w3.org/2001/XMLSchema"/><ds:schemaRef ds:uri="http://www.boldonjames.com/2008/01/sie/internal/label"/></ds:schemaRefs></ds:datastoreItem>
+<ds:datastoreItem ds:itemID="{1F932E4C-D55E-4037-A535-9777C851BCE7}"
+    xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml">
+    <ds:schemaRefs>
+        <ds:schemaRef ds:uri="http://www.w3.org/2001/XMLSchema" />
+        <ds:schemaRef ds:uri="http://www.boldonjames.com/2008/01/sie/internal/label" />
+    </ds:schemaRefs>
+</ds:datastoreItem>
