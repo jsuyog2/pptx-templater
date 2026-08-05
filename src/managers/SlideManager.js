@@ -2297,6 +2297,84 @@ class SlideManager {
     }
     return state.chartMap.get(String(chartId)) || null
   }
+
+  /**
+   * Finds any drawable object (shape, picture, table, chart, group, graphicFrame) on a slide by name or ID.
+   *
+   * @param {number} slideIndex
+   * @param {string} objectIdOrName
+   * @returns {{ element: Object, type: string, frame: Object|null, parent: Object }|null}
+   */
+  findDrawableObject(slideIndex, objectIdOrName) {
+    this.getSlideObj(slideIndex)
+    const state = this.#slideStates.get(slideIndex)
+    if (!state) return null
+
+    const key = String(objectIdOrName)
+
+    // 1. Check shapeMap (shapes, textboxes, group shapes)
+    let res = state.shapeMap.get(key)
+    if (!res && objectIdOrName === 'first') {
+      res = Array.from(state.shapeMap.values())[0] || null
+    }
+    if (res) {
+      return { element: res.shape, type: res.type, frame: null, parent: res.parent }
+    }
+
+    // 2. Check picMap (pictures, icons, SVGs)
+    res = state.picMap.get(key)
+    if (!res && objectIdOrName === 'first') {
+      res = Array.from(state.picMap.values())[0] || null
+    }
+    if (res) {
+      return { element: res.pic, type: 'pic', frame: null, parent: res.parent }
+    }
+
+    // 3. Check tableMap (tables)
+    res = state.tableMap.get(key)
+    if (!res && objectIdOrName === 'first') {
+      res = Array.from(state.tableMap.values())[0] || null
+    }
+    if (res) {
+      return { element: res.table, type: 'table', frame: res.frame, parent: res.parent }
+    }
+
+    // 4. Check chartMap (charts)
+    res = state.chartMap.get(key)
+    if (!res && objectIdOrName === 'first') {
+      res = Array.from(state.chartMap.values())[0] || null
+    }
+    if (res) {
+      return { element: res.chart, type: 'chart', frame: res.frame, parent: res.parent }
+    }
+
+    // 5. Inspect spTree for graphicFrames or placeholders
+    const slideObj = this.getSlideObj(slideIndex)
+    const spTree =
+      slideObj?.['p:sld']?.['p:cSld']?.['p:spTree'] ||
+      slideObj?.['p:sldLayout']?.['p:cSld']?.['p:spTree'] ||
+      slideObj?.['p:sldMaster']?.['p:cSld']?.['p:spTree']
+    if (!spTree) return null
+
+    let frames = spTree['p:graphicFrame'] || []
+    if (!Array.isArray(frames)) frames = [frames]
+    for (const frame of frames) {
+      const cNvPr = frame?.['p:nvGraphicFramePr']?.['p:cNvPr']
+      if (cNvPr) {
+        const name = cNvPr['@_name']
+        const id = String(cNvPr['@_id'])
+        if (objectIdOrName === 'first' || name === objectIdOrName || id === key) {
+          const tbl = frame?.['a:graphic']?.['a:graphicData']?.['a:tbl']
+          if (tbl) return { element: tbl, type: 'table', frame, parent: spTree }
+          const chart = frame?.['a:graphic']?.['a:graphicData']?.['c:chart']
+          if (chart) return { element: chart, type: 'chart', parent: spTree }
+          return { element: frame, type: 'graphicFrame', frame, parent: spTree }
+        }
+      }
+    }
+
+    return null
+  }
 }
 
 module.exports = { SlideManager }

@@ -1457,6 +1457,220 @@ class TableManager {
   }
 
   /**
+   * Converts various measurement unit representations to EMUs.
+   *
+   * @param {number|string} val
+   * @returns {number|'auto'}
+   */
+  #toEMU(val) {
+    if (val === undefined || val === null || val === 'auto') return 'auto'
+    if (typeof val === 'number') {
+      if (val < 10) return Math.round(val * 914400)
+      if (val <= 10000) return Math.round(val * 12700)
+      return Math.round(val)
+    }
+    if (typeof val === 'string') {
+      const str = val.trim().toLowerCase()
+      if (str === 'auto') return 'auto'
+      if (str.endsWith('in')) return Math.round(parseFloat(str) * 914400)
+      if (str.endsWith('pt')) return Math.round(parseFloat(str) * 12700)
+      if (str.endsWith('px')) return Math.round(parseFloat(str) * 9525)
+      if (str.endsWith('emu')) return Math.round(parseFloat(str))
+      const num = parseFloat(str)
+      if (!isNaN(num)) {
+        if (num < 10) return Math.round(num * 914400)
+        if (num <= 10000) return Math.round(num * 12700)
+        return Math.round(num)
+      }
+    }
+    return 'auto'
+  }
+
+  /**
+   * Adjusts one or more row heights in a table (fixed height or auto calculated).
+   *
+   * @param {number} slideIndex
+   * @param {string} tableId
+   * @param {Object|Array} options
+   * @param {SlideManager} slideManager
+   * @param {ShapeManager} [shapeManager=null]
+   */
+  adjustTableRow(slideIndex, tableId, options, slideManager, shapeManager = null) {
+    const { tblObj, frameObj } = this.#getTableContext(slideIndex, tableId, slideManager)
+    const trsArr = tblObj['a:tr'] || []
+    if (trsArr.length === 0) return
+
+    const calculatedHeights = this.#calculateRowHeights(
+      slideIndex,
+      tableId,
+      slideManager,
+      tblObj,
+      false
+    )
+
+    let specs = []
+    if (Array.isArray(options)) {
+      specs = options
+    } else if (options && typeof options === 'object') {
+      if (options.rows && Array.isArray(options.rows)) {
+        specs = options.rows
+      } else {
+        specs = [options]
+      }
+    }
+
+    for (const spec of specs) {
+      if (!spec || typeof spec !== 'object') continue
+      if (spec.auto === true && spec.row === undefined && spec.rowIndex === undefined) {
+        for (let r = 0; r < trsArr.length; r++) {
+          trsArr[r]['@_h'] = String(calculatedHeights[r])
+        }
+        break
+      }
+
+      const rIdx = spec.row !== undefined ? spec.row : spec.rowIndex
+      if (rIdx !== undefined && rIdx >= 0 && rIdx < trsArr.length) {
+        if (spec.auto) {
+          trsArr[rIdx]['@_h'] = String(calculatedHeights[rIdx])
+        } else if (spec.height !== undefined) {
+          const emuH = this.#toEMU(spec.height)
+          if (typeof emuH === 'number') {
+            trsArr[rIdx]['@_h'] = String(emuH)
+          }
+        }
+      }
+    }
+
+    let totalHeight = 0
+    for (const row of trsArr) {
+      totalHeight += parseInt(row['@_h'] || 0, 10)
+    }
+
+    if (!frameObj['p:xfrm']) frameObj['p:xfrm'] = {}
+    if (!frameObj['p:xfrm']['a:ext']) frameObj['p:xfrm']['a:ext'] = {}
+    frameObj['p:xfrm']['a:ext']['@_cy'] = String(totalHeight)
+
+    if (shapeManager) {
+      this.#repositionAllTableCellShapes(slideIndex, tableId, slideManager, shapeManager)
+    }
+    slideManager.markSlideObjDirty(slideIndex)
+  }
+
+  /**
+   * Adjusts one or more column widths in a table (fixed width or auto calculated).
+   *
+   * @param {number} slideIndex
+   * @param {string} tableId
+   * @param {Object|Array} options
+   * @param {SlideManager} slideManager
+   * @param {ShapeManager} [shapeManager=null]
+   */
+  adjustTableColumn(slideIndex, tableId, options, slideManager, shapeManager = null) {
+    const { tblObj, frameObj } = this.#getTableContext(slideIndex, tableId, slideManager)
+    const gridCols = tblObj['a:tblGrid']?.['a:gridCol'] || []
+    const gridColsArr = Array.isArray(gridCols) ? gridCols : [gridCols]
+    if (gridColsArr.length === 0) return
+
+    const calculatedWidths = this.#calculateColumnWidths(
+      slideIndex,
+      tableId,
+      slideManager,
+      tblObj,
+      false
+    )
+
+    let specs = []
+    if (Array.isArray(options)) {
+      specs = options
+    } else if (options && typeof options === 'object') {
+      if (options.columns && Array.isArray(options.columns)) {
+        specs = options.columns
+      } else {
+        specs = [options]
+      }
+    }
+
+    for (const spec of specs) {
+      if (!spec || typeof spec !== 'object') continue
+      if (spec.auto === true && spec.column === undefined && spec.colIndex === undefined) {
+        for (let c = 0; c < gridColsArr.length; c++) {
+          gridColsArr[c]['@_w'] = String(calculatedWidths[c])
+        }
+        break
+      }
+
+      const cIdx = spec.column !== undefined ? spec.column : spec.colIndex
+      if (cIdx !== undefined && cIdx >= 0 && cIdx < gridColsArr.length) {
+        if (spec.auto) {
+          gridColsArr[cIdx]['@_w'] = String(calculatedWidths[cIdx])
+        } else if (spec.width !== undefined) {
+          const emuW = this.#toEMU(spec.width)
+          if (typeof emuW === 'number') {
+            gridColsArr[cIdx]['@_w'] = String(emuW)
+          }
+        }
+      }
+    }
+
+    let totalWidth = 0
+    for (const col of gridColsArr) {
+      totalWidth += parseInt(col['@_w'] || 0, 10)
+    }
+
+    if (!frameObj['p:xfrm']) frameObj['p:xfrm'] = {}
+    if (!frameObj['p:xfrm']['a:ext']) frameObj['p:xfrm']['a:ext'] = {}
+    frameObj['p:xfrm']['a:ext']['@_cx'] = String(totalWidth)
+
+    if (shapeManager) {
+      this.#repositionAllTableCellShapes(slideIndex, tableId, slideManager, shapeManager)
+    }
+    slideManager.markSlideObjDirty(slideIndex)
+  }
+
+  /**
+   * Resizes the table by adjusting both row heights and column widths.
+   *
+   * @param {number} slideIndex
+   * @param {string} tableId
+   * @param {Object} options
+   * @param {SlideManager} slideManager
+   * @param {ShapeManager} [shapeManager=null]
+   */
+  adjustTable(slideIndex, tableId, options = {}, slideManager, shapeManager = null) {
+    let colOpts = null
+    let rowOpts = null
+
+    if (options.auto === true || options === 'auto') {
+      colOpts = { auto: true }
+      rowOpts = { auto: true }
+    } else {
+      if (options.columns !== undefined) {
+        colOpts = options.columns === 'auto' ? { auto: true } : options.columns
+      }
+      if (options.rows !== undefined) {
+        rowOpts = options.rows === 'auto' ? { auto: true } : options.rows
+      }
+    }
+
+    if (colOpts) {
+      this.adjustTableColumn(slideIndex, tableId, colOpts, slideManager, shapeManager)
+    }
+    if (rowOpts) {
+      this.adjustTableRow(slideIndex, tableId, rowOpts, slideManager, shapeManager)
+    }
+
+    if (!colOpts && !rowOpts) {
+      this.adjustTableColumn(slideIndex, tableId, { auto: true }, slideManager, shapeManager)
+      this.adjustTableRow(slideIndex, tableId, { auto: true }, slideManager, shapeManager)
+    }
+
+    if (shapeManager) {
+      this.#repositionAllTableCellShapes(slideIndex, tableId, slideManager, shapeManager)
+    }
+    slideManager.markSlideObjDirty(slideIndex)
+  }
+
+  /**
    * Inspects all tables in a slide.
    *
    * @param {number} slideIndex

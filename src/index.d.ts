@@ -23,6 +23,10 @@ export class PPTXTemplater {
   updateTable(tableName: string, rows: any[][]): this;
   addTableRow(tableName: string, row: any[]): this;
   removeTableRow(tableName: string, rowIndex: number): this;
+  adjustTableRow(tableName: string, options: any): this;
+  adjustTableColumn(tableName: string, options: any): this;
+  adjustTable(tableName: string, options?: any): this;
+  resize(objectIdOrName: string, options: any): this;
   mergeCells(tableName: string, startRow: number, startCol: number, endRow: number, endCol: number): this;
   saveToFile(filePath: string, options?: any): Promise<void>;
   save(filePath: string, options?: any): Promise<void>;

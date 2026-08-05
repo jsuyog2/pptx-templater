@@ -2072,6 +2072,111 @@ class PPTXTemplater {
   }
 
   /**
+   * Adjusts table row height(s). Supports direct height values or auto-calculation based on cell content.
+   *
+   * @param {string} tableId - Table name or shape ID.
+   * @param {Object|Array} options - Row adjustment options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.adjustTableRow("Table", { row: 2, height: 35 });
+   * ppt.adjustTableRow("Table", { row: 2, auto: true });
+   */
+  adjustTableRow(tableId, options) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#tableManager.adjustTableRow(
+        idx,
+        tableId,
+        options,
+        this.#slideManager,
+        this.#shapeManager
+      )
+    }
+    return this
+  }
+
+  /**
+   * Adjusts table column width(s). Supports direct width values or auto-calculation based on cell content.
+   *
+   * @param {string} tableId - Table name or shape ID.
+   * @param {Object|Array} options - Column adjustment options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.adjustTableColumn("Table", { column: 3, width: 2.4 });
+   * ppt.adjustTableColumn("Table", { column: 3, auto: true });
+   */
+  adjustTableColumn(tableId, options) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#tableManager.adjustTableColumn(
+        idx,
+        tableId,
+        options,
+        this.#slideManager,
+        this.#shapeManager
+      )
+    }
+    return this
+  }
+
+  /**
+   * Resizes the table by adjusting both row heights and column widths.
+   *
+   * @param {string} tableId - Table name or shape ID.
+   * @param {Object} [options={}] - Table adjustment options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.adjustTable("Table", { auto: true });
+   * ppt.adjustTable("Table", { rows: "auto", columns: "auto" });
+   * ppt.adjustTable("Table", { rows: { auto: true }, columns: { auto: true } });
+   */
+  adjustTable(tableId, options = {}) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#tableManager.adjustTable(idx, tableId, options, this.#slideManager)
+    }
+    return this
+  }
+
+  /**
+   * Resizes any drawable object (shape, textbox, picture, chart, table, SVG, icon, placeholder, group) on active slides.
+   * Supports absolute dimensions (width/height), relative delta (increase/decrease), and percentage scaling (scale).
+   *
+   * @param {string} objectIdOrName - Object name or shape ID.
+   * @param {Object} options - Resize options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.resize("Logo", { width: 4 });
+   * ppt.resize("Chart", { height: 3 });
+   * ppt.resize("Rectangle", { width: 5, height: 2 });
+   * ppt.resize("Image", { increase: { width: 1 } });
+   * ppt.resize("Chart", { decrease: { height: 0.5 } });
+   * ppt.resize("Image", { scale: 1.2 });
+   * ppt.resize("Chart", { scale: { width: 1.1, height: 0.9 } });
+   */
+  resize(objectIdOrName, options = {}) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#shapeManager.resizeObject(
+        idx,
+        objectIdOrName,
+        options,
+        this.#slideManager,
+        this.#tableManager
+      )
+    }
+    return this
+  }
+
+  /**
    * Returns metadata for all tables on the targeted slide(s).
    *
    * @returns {Array<{name: string, rows: number, cols: number, zipPath: string}>}

@@ -1,7 +1,3 @@
-<?xml version="1.0" encoding="us-ascii"?>
-<sisl xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" sislVersion="0"
-    policy="4f3ffa34-8ea5-4d04-9688-c0eeb614b05f" origin="userSelected"
-    xmlns="http://www.boldonjames.com/2008/01/sie/internal/label">
-    <element uid="id_classification_nonbusiness" value="" />
+<?xml version="1.0" encoding="us-ascii"?><sisl xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" sislVersion="0" policy="4f3ffa34-8ea5-4d04-9688-c0eeb614b05f" origin="userSelected" xmlns="http://www.boldonjames.com/2008/01/sie/internal/label">
+    <element uid="id_classification_nonbusiness" value=""/>
 </sisl>
