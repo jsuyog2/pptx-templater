@@ -2072,6 +2072,85 @@ class PPTXTemplater {
   }
 
   /**
+   * Adjusts table row height(s). Supports direct height values or auto-calculation based on cell content.
+   *
+   * @param {string} tableId - Table name or shape ID.
+   * @param {Object|Array} options - Row adjustment options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.adjustTableRow("Table", { row: 2, height: 35 });
+   * ppt.adjustTableRow("Table", { row: 2, auto: true });
+   */
+  adjustTableRow(tableId, options) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#tableManager.adjustTableRow(
+        idx,
+        tableId,
+        options,
+        this.#slideManager,
+        this.#shapeManager
+      )
+    }
+    return this
+  }
+
+  /**
+   * Adjusts table column width(s). Supports direct width values or auto-calculation based on cell content.
+   *
+   * @param {string} tableId - Table name or shape ID.
+   * @param {Object|Array} options - Column adjustment options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.adjustTableColumn("Table", { column: 3, width: 2.4 });
+   * ppt.adjustTableColumn("Table", { column: 3, auto: true });
+   */
+  adjustTableColumn(tableId, options) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#tableManager.adjustTableColumn(
+        idx,
+        tableId,
+        options,
+        this.#slideManager,
+        this.#shapeManager
+      )
+    }
+    return this
+  }
+
+  /**
+   * Resizes the table by adjusting both row heights and column widths.
+   *
+   * @param {string} tableId - Table name or shape ID.
+   * @param {Object} [options={}] - Table adjustment options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.adjustTable("Table", { auto: true });
+   * ppt.adjustTable("Table", { rows: "auto", columns: "auto" });
+   * ppt.adjustTable("Table", { rows: { auto: true }, columns: { auto: true } });
+   */
+  adjustTable(tableId, options = {}) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#tableManager.adjustTable(
+        idx,
+        tableId,
+        options,
+        this.#slideManager,
+        this.#shapeManager
+      )
+    }
+    return this
+  }
+
+  /**
    * Returns metadata for all tables on the targeted slide(s).
    *
    * @returns {Array<{name: string, rows: number, cols: number, zipPath: string}>}
