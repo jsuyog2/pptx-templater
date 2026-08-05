@@ -2144,7 +2144,38 @@ class PPTXTemplater {
         tableId,
         options,
         this.#slideManager,
-        this.#shapeManager
+      )
+    }
+    return this
+  }
+
+  /**
+   * Resizes any drawable object (shape, textbox, picture, chart, table, SVG, icon, placeholder, group) on active slides.
+   * Supports absolute dimensions (width/height), relative delta (increase/decrease), and percentage scaling (scale).
+   *
+   * @param {string} objectIdOrName - Object name or shape ID.
+   * @param {Object} options - Resize options.
+   * @returns {PPTXTemplater} this (chainable)
+   *
+   * @example
+   * ppt.resize("Logo", { width: 4 });
+   * ppt.resize("Chart", { height: 3 });
+   * ppt.resize("Rectangle", { width: 5, height: 2 });
+   * ppt.resize("Image", { increase: { width: 1 } });
+   * ppt.resize("Chart", { decrease: { height: 0.5 } });
+   * ppt.resize("Image", { scale: 1.2 });
+   * ppt.resize("Chart", { scale: { width: 1.1, height: 0.9 } });
+   */
+  resize(objectIdOrName, options = {}) {
+    this.#assertLoaded()
+    const targetIndices = this.#getTargetSlideIndices()
+    for (const idx of targetIndices) {
+      this.#shapeManager.resizeObject(
+        idx,
+        objectIdOrName,
+        options,
+        this.#slideManager,
+        this.#tableManager
       )
     }
     return this

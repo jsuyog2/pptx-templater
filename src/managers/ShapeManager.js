@@ -1265,6 +1265,139 @@ class ShapeManager {
       text,
     }
   }
+
+  /**
+   * Universal object resizer for any drawable object on a slide.
+   * Supports absolute dimensions, relative delta (increase/decrease), percentage scaling (scale), and table grid resizes.
+   *
+   * @param {number} slideIndex
+   * @param {string} objectIdOrName
+   * @param {Object} options
+   * @param {SlideManager} slideManager
+   * @param {TableManager} [tableManager=null]
+   */
+  resizeObject(slideIndex, objectIdOrName, options = {}, slideManager, tableManager = null) {
+    const target = slideManager.findDrawableObject(slideIndex, objectIdOrName)
+    if (!target) {
+      throw new PPTXError(`Object "${objectIdOrName}" not found on slide ${slideIndex}`)
+    }
+
+    const { element, type, frame } = target
+
+    const parseDim = val => {
+      if (val === undefined || val === null) return undefined
+      if (typeof val === 'number') {
+        if (val < 10) return Math.round(val * 914400)
+        if (val <= 10000) return Math.round(val * 12700)
+        return Math.round(val)
+      }
+      if (typeof val === 'string') {
+        const str = val.trim().toLowerCase()
+        if (str.endsWith('in')) return Math.round(parseFloat(str) * 914400)
+        if (str.endsWith('pt')) return Math.round(parseFloat(str) * 12700)
+        if (str.endsWith('px')) return Math.round(parseFloat(str) * 9525)
+        if (str.endsWith('emu')) return Math.round(parseFloat(str))
+        const num = parseFloat(str)
+        if (!isNaN(num)) {
+          if (num < 10) return Math.round(num * 914400)
+          if (num <= 10000) return Math.round(num * 12700)
+          return Math.round(num)
+        }
+      }
+      return undefined
+    }
+
+    let xfrm = null
+    if (type === 'table' || type === 'chart' || type === 'graphicFrame') {
+      if (frame) {
+        if (!frame['p:xfrm']) frame['p:xfrm'] = {}
+        xfrm = frame['p:xfrm']
+      }
+    } else if (type === 'grpSp') {
+      if (!element['p:grpSpPr']) element['p:grpSpPr'] = {}
+      if (!element['p:grpSpPr']['a:xfrm']) element['p:grpSpPr']['a:xfrm'] = {}
+      xfrm = element['p:grpSpPr']['a:xfrm']
+    } else {
+      if (!element['p:spPr']) element['p:spPr'] = {}
+      if (!element['p:spPr']['a:xfrm']) element['p:spPr']['a:xfrm'] = {}
+      xfrm = element['p:spPr']['a:xfrm']
+    }
+
+    if (!xfrm) {
+      throw new PPTXError(`Unable to locate transform (a:xfrm) for object "${objectIdOrName}"`)
+    }
+
+    if (!xfrm['a:off']) xfrm['a:off'] = { '@_x': '0', '@_y': '0' }
+    if (!xfrm['a:ext']) xfrm['a:ext'] = { '@_cx': '0', '@_cy': '0' }
+
+    const currentCx = parseInt(xfrm['a:ext']['@_cx'] || 0, 10)
+    const currentCy = parseInt(xfrm['a:ext']['@_cy'] || 0, 10)
+
+    let targetWidth = undefined
+    let targetHeight = undefined
+
+    if (options.scale !== undefined) {
+      if (typeof options.scale === 'number') {
+        targetWidth = Math.round(currentCx * options.scale)
+        targetHeight = Math.round(currentCy * options.scale)
+      } else if (typeof options.scale === 'object' && options.scale !== null) {
+        if (options.scale.width !== undefined) {
+          targetWidth = Math.round(currentCx * options.scale.width)
+        }
+        if (options.scale.height !== undefined) {
+          targetHeight = Math.round(currentCy * options.scale.height)
+        }
+      }
+    }
+
+    if (options.increase && typeof options.increase === 'object') {
+      const incW = parseDim(options.increase.width)
+      const incH = parseDim(options.increase.height)
+      if (incW !== undefined) targetWidth = currentCx + incW
+      if (incH !== undefined) targetHeight = currentCy + incH
+    }
+
+    if (options.decrease && typeof options.decrease === 'object') {
+      const decW = parseDim(options.decrease.width)
+      const decH = parseDim(options.decrease.height)
+      if (decW !== undefined) targetWidth = Math.max(10000, currentCx - decW)
+      if (decH !== undefined) targetHeight = Math.max(10000, currentCy - decH)
+    }
+
+    if (options.width !== undefined) {
+      targetWidth = parseDim(options.width)
+    }
+    if (options.height !== undefined) {
+      targetHeight = parseDim(options.height)
+    }
+
+    const maintainAspect =
+      options.maintainAspectRatio !== false &&
+      options.keepAspectRatio !== false &&
+      options.preserveAspectRatio !== false
+
+    if (maintainAspect) {
+      if (targetWidth !== undefined && targetHeight === undefined && currentCx > 0) {
+        targetHeight = Math.round(currentCy * (targetWidth / currentCx))
+      } else if (targetHeight !== undefined && targetWidth === undefined && currentCy > 0) {
+        targetWidth = Math.round(currentCx * (targetHeight / currentCy))
+      }
+    }
+
+    const finalWidth = targetWidth !== undefined ? targetWidth : currentCx
+    const finalHeight = targetHeight !== undefined ? targetHeight : currentCy
+
+    if (type === 'table' && tableManager) {
+      tableManager.resizeTable(slideIndex, objectIdOrName, finalWidth, finalHeight, slideManager)
+      return
+    }
+
+    xfrm['a:ext']['@_cx'] = String(finalWidth)
+    xfrm['a:ext']['@_cy'] = String(finalHeight)
+
+    slideManager.markSlideObjDirty(slideIndex)
+    logger.debug(`Resized object "${objectIdOrName}" on slide ${slideIndex} to ${finalWidth}x${finalHeight} EMUs`)
+  }
 }
 
 function escapeXml(str) {
