@@ -2139,12 +2139,7 @@ class PPTXTemplater {
     this.#assertLoaded()
     const targetIndices = this.#getTargetSlideIndices()
     for (const idx of targetIndices) {
-      this.#tableManager.adjustTable(
-        idx,
-        tableId,
-        options,
-        this.#slideManager,
-      )
+      this.#tableManager.adjustTable(idx, tableId, options, this.#slideManager)
     }
     return this
   }

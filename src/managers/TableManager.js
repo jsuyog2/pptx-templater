@@ -1500,7 +1500,13 @@ class TableManager {
     const trsArr = tblObj['a:tr'] || []
     if (trsArr.length === 0) return
 
-    const calculatedHeights = this.#calculateRowHeights(slideIndex, tableId, slideManager, tblObj, false)
+    const calculatedHeights = this.#calculateRowHeights(
+      slideIndex,
+      tableId,
+      slideManager,
+      tblObj,
+      false
+    )
 
     let specs = []
     if (Array.isArray(options)) {
@@ -1515,7 +1521,7 @@ class TableManager {
 
     for (const spec of specs) {
       if (!spec || typeof spec !== 'object') continue
-      if (spec.auto === true && (spec.row === undefined && spec.rowIndex === undefined)) {
+      if (spec.auto === true && spec.row === undefined && spec.rowIndex === undefined) {
         for (let r = 0; r < trsArr.length; r++) {
           trsArr[r]['@_h'] = String(calculatedHeights[r])
         }
@@ -1565,7 +1571,13 @@ class TableManager {
     const gridColsArr = Array.isArray(gridCols) ? gridCols : [gridCols]
     if (gridColsArr.length === 0) return
 
-    const calculatedWidths = this.#calculateColumnWidths(slideIndex, tableId, slideManager, tblObj, false)
+    const calculatedWidths = this.#calculateColumnWidths(
+      slideIndex,
+      tableId,
+      slideManager,
+      tblObj,
+      false
+    )
 
     let specs = []
     if (Array.isArray(options)) {
@@ -1580,7 +1592,7 @@ class TableManager {
 
     for (const spec of specs) {
       if (!spec || typeof spec !== 'object') continue
-      if (spec.auto === true && (spec.column === undefined && spec.colIndex === undefined)) {
+      if (spec.auto === true && spec.column === undefined && spec.colIndex === undefined) {
         for (let c = 0; c < gridColsArr.length; c++) {
           gridColsArr[c]['@_w'] = String(calculatedWidths[c])
         }

@@ -1396,7 +1396,9 @@ class ShapeManager {
     xfrm['a:ext']['@_cy'] = String(finalHeight)
 
     slideManager.markSlideObjDirty(slideIndex)
-    logger.debug(`Resized object "${objectIdOrName}" on slide ${slideIndex} to ${finalWidth}x${finalHeight} EMUs`)
+    logger.debug(
+      `Resized object "${objectIdOrName}" on slide ${slideIndex} to ${finalWidth}x${finalHeight} EMUs`
+    )
   }
 }
 
